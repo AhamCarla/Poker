@@ -5,6 +5,21 @@ import java.util.stream.Stream;
 
 public class Poker {
 
+    public static boolean isFlush(List<PokerUtil> cardList) {
+        return cardList.stream()
+                .collect(Collectors.toMap(item -> item.getColor().getColor(), item -> 1, Integer::sum))
+                .entrySet().stream()
+                .anyMatch(entry -> entry.getValue() == 5);
+    }
+
+    public static boolean isStraight(List<PokerUtil> cardList) {
+        for (int i = 1; i < cardList.size(); i++) {
+            if (cardList.get(i).getNumber().getValue() != (cardList.get(i - 1).getNumber().getValue() + 1)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static Map getCardListLevel(List<PokerUtil> cardList) {
 
@@ -18,7 +33,12 @@ public class Poker {
     public static String winnerJudge(List<PokerUtil> oneCards, List<PokerUtil> twoCards) {
         oneCards.sort(PokerUtil::compareTo);
         twoCards.sort(PokerUtil::compareTo);
-
+        if (isFlush(oneCards) != isFlush(twoCards)) {
+            return isFlush(oneCards) ? "1" : "2";
+        }
+        if (isStraight(oneCards) != isStraight(twoCards)) {
+            return isStraight(oneCards) ? "1" : "2";
+        }
         Map<Integer, Integer> oneCardsMap = getCardListLevel(oneCards);
         Map<Integer, Integer> twoCardsMap = getCardListLevel(twoCards);
         int onePlayerCardMaxLevel = 0;
