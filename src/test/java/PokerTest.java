@@ -103,5 +103,25 @@ public class PokerTest {
 
     }
 
+    @Test
+    public void should_return_2_when_given_1_3D4S5C6D7D_and_2_5D8D9D3DTD() {
+
+
+        ArrayList<PokerUtil> oneList = PokerUtil.generateCard("3D4S5C6D7D");
+        ArrayList<PokerUtil> twoList = PokerUtil.generateCard("5D8D9D3DTD");
+        assertEquals("2", Poker.winnerJudge(oneList, twoList));
+
+    }
+
+    @Test
+    public void should_return_2_when_given_1_5D8D9D3DTD_and_2_3H3D5S5C3D() {
+
+
+        ArrayList<PokerUtil> oneList = PokerUtil.generateCard("5D8D9D3DTD");
+        ArrayList<PokerUtil> twoList = PokerUtil.generateCard("3H3D5S5C3D");
+        assertEquals("2", Poker.winnerJudge(oneList, twoList));
+
+    }
+
 
 }

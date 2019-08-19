@@ -4,6 +4,28 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Poker {
+    public static boolean isStraightFlush(List<PokerUtil> cardList) {
+        return isStraight(cardList) && isFlush(cardList);
+    }
+
+    public static boolean isFourOfAKind(List<PokerUtil> cardList) {
+        return cardList.stream()
+                .collect(Collectors.toMap(item -> item.getNumber().getValue(), item -> 1, Integer::sum))
+                .entrySet().stream()
+                .anyMatch(entry -> entry.getValue() == 4);
+    }
+
+
+    public static boolean isFullHouse(List<PokerUtil> cardList) {
+        return cardList.stream()
+                .collect(Collectors.toMap(item -> item.getNumber().getValue(), item -> 1, Integer::sum))
+                .entrySet().stream()
+                .anyMatch(entry -> entry.getValue() == 3) &&
+                cardList.stream()
+                        .collect(Collectors.toMap(item -> item.getNumber().getValue(), item -> 1, Integer::sum))
+                        .entrySet().stream()
+                        .anyMatch(entry -> entry.getValue() == 2);
+    }
 
     public static boolean isFlush(List<PokerUtil> cardList) {
         return cardList.stream()
@@ -33,6 +55,15 @@ public class Poker {
     public static String winnerJudge(List<PokerUtil> oneCards, List<PokerUtil> twoCards) {
         oneCards.sort(PokerUtil::compareTo);
         twoCards.sort(PokerUtil::compareTo);
+        if (isStraightFlush(oneCards) != isStraightFlush(twoCards)) {
+            return isStraightFlush(oneCards) ? "1" : "2";
+        }
+        if (isFourOfAKind(oneCards) != isFourOfAKind(twoCards)) {
+            return isFourOfAKind(oneCards) ? "1" : "2";
+        }
+        if (isFullHouse(oneCards) != isFullHouse(twoCards)) {
+            return isFullHouse(oneCards) ? "1" : "2";
+        }
         if (isFlush(oneCards) != isFlush(twoCards)) {
             return isFlush(oneCards) ? "1" : "2";
         }
