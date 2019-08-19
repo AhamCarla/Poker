@@ -15,5 +15,12 @@ public class PokerTest {
         assertEquals("1", Poker.winnerJudge(Arrays.asList(one), Arrays.asList(two)));
     }
 
+    @Test
+    public void should_return_draw_when_given_1_KD_and_2_KD() {
+        PokerUtil one = new PokerUtil("KD");
+        PokerUtil two = new PokerUtil("KD");
+
+        assertEquals("draw", Poker.winnerJudge(Arrays.asList(one), Arrays.asList(two)));
+    }
 
 }
