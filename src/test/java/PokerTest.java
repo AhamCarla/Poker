@@ -23,4 +23,15 @@ public class PokerTest {
         assertEquals("draw", Poker.winnerJudge(Arrays.asList(one), Arrays.asList(two)));
     }
 
+    @Test
+    public void should_return_1_when_given_1_2H3D5S9CKD_and_2_3D4S6CTD9D() {
+
+
+        ArrayList<PokerUtil> oneList = PokerUtil.generateCard("2H3D5S9CKD");
+        ArrayList<PokerUtil> twoList = PokerUtil.generateCard("3D4S6CTD9D");
+        assertEquals("1", Poker.winnerJudge(oneList, twoList));
+
+    }
+
+
 }
